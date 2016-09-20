@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 
 Gem::Specification.new do |spec|
-  spec.name            = 'hello'
+  spec.name            = '<%= @project %>'
   spec.version         = '0.1.0'
   spec.author          = 'YOUR NAME'
   spec.email           = 'yourname(at)example.com'
   spec.platform        = Gem::Platform::RUBY
-  spec.homepage        = 'https://github.com/yourname/hello'
+  spec.homepage        = 'https://github.com/yourname/<%= @project %>'
   spec.summary         = "example scirpt to print 'Hello'"
   spec.description     = <<-'END'
 This is an example project to create a script which just print 'Hello'.
 END
   spec.license         = 'MIT'
   spec.files           = Dir[*%w[
-                           README.md MIT-LICENSE Rakefile hello.gemspec
+                           README.md MIT-LICENSE Rakefile <%= @project %>.gemspec
                            bin/*
                            lib/**/*.rb
                            test/**/*.rb
