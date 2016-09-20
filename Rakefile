@@ -2,6 +2,7 @@
 
 
 PROJECT = "hello"
+SPECFILE = PROEJCT + ".gemspec"
 
 
 def edit(*filepaths)
@@ -55,26 +56,31 @@ end
 desc "update release number"
 task :prepare do
   release = release_number_required(:prepare)
-  spec = load_gemspec_file("#{PROJECT}.gemspec")
+  edit(SPECFILE) {|s|
+    s.sub(/(spec\.version[ \t]*=)[ \t]*('.*?'|".*?")/, "\\1 '#{release}'")
+  }
   edit(spec.files) {|s|
-    s = s.gsub(/\$Release\:.*?\$/,   "$Release\: #{release} $")
-    s = s.gsub(/\$Release\$/,        release)
-    s
+    s.gsub(/\$Release\:.*?\$/,   "$Release\: #{release} $") \
+     .gsub(/\$Release\$/,        release)
   }
 end
 
 
 desc "create gem package"
-task :package => :prepare do
-  release_number_required(:package)
-  sh "gem build #{PROJECT}.gemspec"
+task :package do
+  sh "gem build #{SPECFILE}"
 end
 
 
 desc "upload gem to rubygems.org"
 task :release => :package do
-  release = release_number_required(:release)
-  spec = load_gemspec_file("#{PROJECT}.gemspec")
-  sh "git tag release-#{spec.version}"
-  sh "gem push #{PROJECT}-#{spec.version}.gem"
+  spec = load_gemspec_file(SPECFILE)
+  release = spec.version
+  print "*** Are you sure to upload #{PROJECT}-#{release}.gem? [y/N]: "
+  answer = gets().strip()
+  if answer =~ /\A[yY]/
+    #sh "git tag v#{release}"
+    sh "git tag release-#{release}"
+    sh "gem push #{PROJECT}-#{release}.gem"
+  end
 end
