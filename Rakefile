@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 
-PROJECT = "hello"
-SPECFILE = PROEJCT + ".gemspec"
+PROJECT  = "hello"
+SPECFILE = PROJECT + ".gemspec"
 
 
 ##
