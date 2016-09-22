@@ -9,7 +9,26 @@ SPECFILE = PROJECT + ".gemspec"
 ## tasks
 ##
 
-task :default => :test
+task :default => :howto    # or :test if you like
+
+
+desc "show how to release"
+task :howto do
+  puts <<'END'
+How to release:
+
+  $ git diff                     # confirm that no diff
+  $ rake test
+  $ rake prepare release=0.0.0   # update release number
+  $ rake package                 # create gem file
+  $ rake release                 # upload to rubygems.org
+  $ git checkout .               # reset release number
+  $ git tag | grep 0.0.0         # confirm release tag
+  release-0.0.0
+  $ git push --tags
+
+END
+end
 
 
 desc "run test scripts"
