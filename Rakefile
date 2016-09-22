@@ -14,8 +14,21 @@ task :default => :test
 
 desc "run test scripts"
 task :test do
-  sh "ruby test/**/*_test.rb"
+  $LOAD_PATH << File.join(File.dirname(__FILE__), "lib")
+  #sh "ruby test/**/*_{test,spec}.rb"   # not work
+  pattern = 'test/**/*_{test,spec}.rb'
+  files = Dir.glob(pattern)
+  files = [pattern] if files.empty?
+  puts "ruby #{pattern}"
+  sh "ruby", *files, :verbose=>false
 end
+### or
+#require 'rake/testtask'
+#Rake::TestTask.new do |test|
+#  #test.libs << 'lib' << 'test'
+#  test.test_files = Dir.glob('test/**/*_{test,spec}.rb')
+#  test.verbose = true
+#end
 
 
 desc "update release number"
