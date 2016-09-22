@@ -34,9 +34,6 @@ end
 desc "update release number"
 task :prepare do
   release = release_number_required(:prepare)
-  edit(SPECFILE) {|s|
-    s.sub(/(spec\.version[ \t]*=)[ \t]*('.*?'|".*?")/, "\\1 '#{release}'")
-  }
   edit(spec.files) {|s|
     s.gsub(/\$Release\:.*?\$/,   "$Release\: #{release} $") \
      .gsub(/\$Release\$/,        release)
@@ -54,12 +51,13 @@ desc "upload gem to rubygems.org"
 task :release => :package do
   spec = load_gemspec_file(SPECFILE)
   release = spec.version
-  print "*** Are you sure to upload #{PROJECT}-#{release}.gem? [y/N]: "
+  gemfile = "#{PROJECT}-#{release}.gem"
+  print "*** Are you sure to upload #{gemfile}? [y/N]: "
   answer = gets().strip()
   if answer =~ /\A[yY]/
     #sh "git tag v#{release}"
     sh "git tag release-#{release}"
-    sh "gem push #{PROJECT}-#{release}.gem"
+    sh "gem push #{gemfile}"
   end
 end
 
@@ -78,6 +76,7 @@ def edit(*filepaths)
         f.rewind()
         f.truncate(0)
         f.write(new_s)
+        puts "[Change] #{fpath}"
       end
     end
   end
