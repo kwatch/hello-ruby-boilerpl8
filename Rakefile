@@ -12,52 +12,22 @@ SPECFILE = PROJECT + ".gemspec"
 task :default => :howto    # or :test if you like
 
 
-namespace :howto do
+desc "show how to release"
+task :howto do
+  puts <<'END'
+How to release:
 
-  namespace :release do
-
-    desc "show how to release new version"
-    task :new do
-      puts <<'END'
-How to create new release (= X.Y.0):
-
-  $ git checkout -b rel-0.1      # create new branch on local
-  $ git push -u origin rel-0.1   # push new branch to remote
+  $ git diff                     # confirm that no diff
   $ rake test
-  $ rake prepare release=0.1.0   # update release number
-  $ git diff
-  $ git add
-  $ git commit -m "release 0.1.0"
-  $ git push
+  $ rake prepare release=0.0.0   # update release number
   $ rake package                 # create gem file
-  $ rake publish                 # upload to rubygems.org
-  $ git tag v0.1.0
+  $ rake release                 # upload to rubygems.org
+  $ git checkout .               # reset release number
+  $ git tag | grep 0.0.0         # confirm release tag
+  release-0.0.0
   $ git push --tags
 
 END
-    end
-
-    desc "show how to release bugfix version"
-    task :bugfix do
-      puts <<'END'
-How to create bugfix release (= x.y.Z):
-
-  $ git checkout rel-0.1         # switch to existing branch
-  $ rake test
-  $ rake prepare release=0.1.1   # update release number
-  $ git diff
-  $ git add
-  $ git commit -m "release 0.1.1"
-  $ rake package                 # create gem file
-  $ rake publish                 # upload to rubygems.org
-  $ git tag v0.1.1
-  $ git push --tags
-
-END
-    end
-
-  end
-
 end
 
 
