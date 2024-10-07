@@ -16,16 +16,20 @@ end
 
 MiniTest::Assertions.module_eval do
 
-  def capture_io
-    bkup = [$stdout, $stderr]
+  def capture_stdio(input="", tty: false)
+    bkup = [$stdin, $stdout, $stderr]
+    $stdin  = StringIO.new(input)
     $stdout = StringIO.new
     $stderr = StringIO.new
-    begin
-      yield
-      return [$stdout.string, $stderr.string]
-    ensure
-      $stdout, $stderr = bkup
+    if tty
+      def $stdin.tty?  ; true; end
+      def $stdout.tty? ; true; end
+      def $stderr.tty? ; true; end
     end
+    yield
+    return $stdout.string, $stderr.string
+  ensure
+    $stdout, $stdout, $stderr = bkup
   end
 
 end
