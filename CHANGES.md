@@ -1,9 +1,8 @@
-=======
 CHANGES
 =======
 
 
-Release 0.2.0 (2016-02-01)
+Release 0.2.0 (20XX-02-01)
 --------------------------
 
 ### Enhancements
@@ -19,7 +18,7 @@ Release 0.2.0 (2016-02-01)
 * Blah blah blah
 
 
-Release 0.1.0 (2016-01-01)
+Release 0.1.0 (20XX-01-01)
 --------------------------
 
 * First public release
