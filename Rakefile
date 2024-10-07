@@ -67,16 +67,16 @@ end
 
 
 desc "upload gem to rubygems.org"
-task :release => :package do
+task :publish => :package do
   spec = load_gemspec_file(SPECFILE)
   release = spec.version
   gemfile = "#{PROJECT}-#{release}.gem"
   print "*** Are you sure to upload #{gemfile}? [y/N]: "
   answer = gets().strip()
   if answer =~ /\A[yY]/
-    #sh "git tag v#{release}"
-    sh "git tag release-#{release}"
     sh "gem push #{gemfile}"
+    #sh "git tag release-#{release}"
+    sh "git tag v#{release}"
   end
 end
 
