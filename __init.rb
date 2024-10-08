@@ -4,7 +4,7 @@ require 'erb'
 require 'etc'
 
 
-def run
+def run()
 
   ## context values
   @project = File.basename(Dir.pwd)             # project name
@@ -20,10 +20,12 @@ def run
     end
   end
 
-  ## edit project name in Rakefile
+  ## edit project name and copyright in Rakefile
   File.open('Rakefile', 'r+') do |f|
+    year = Time.now.year
     s = f.read()
-    s = s.sub(/(PROJECT += +)\S+/, "\\1'#{@project}'")
+    s = s.sub(/(PROJECT += +).*/  , "\\1\"#{@project}\"")
+    s = s.sub(/(COPYRIGHT += +).*/, "\\1\"copyright(c) #{year} #{@user}\"")
     f.rewind()
     f.truncate(0)
     f.write(s)
