@@ -55,19 +55,17 @@ module Hello
     end
 
     def run(*args)
-      opts = {}
-      parser = new_option_parser(opts)
+      options = {}
+      parser = new_option_parser(options)
       #parser.parse!(args)
       parser.permute!(args)   # or .order!()
       #
-      done = handle_options(opts)
+      done = handle_options(options)
       return if done
       #
-      lang = opts[:lang]
-      name = args[0]
-      model = Model.new(lang)
+      name = args.empty? ? nil : args[0]
+      model = Model.new(options[:lang])
       puts model.message(name)
-      return
     end
 
     protected
@@ -86,12 +84,12 @@ module Hello
       return parser
     end
 
-    def handle_options(opts)
-      if opts[:help]
+    def handle_options(options)
+      if options[:help]
         print render_help_message()
         return true
       end
-      if opts[:version]
+      if options[:version]
         puts VERSION
         return true
       end
