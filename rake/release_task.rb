@@ -16,11 +16,12 @@ def howto_release(project, version)
   version =~ /\A(\d+\.\d+)/  or
     abort "#{version}: Invalid version number."
   ver = $1
-  zero_p = ver.end_with?('.0')
+  zero_p = (version =~ /\A\d+\.\d+\.0\b/)
+  release_type = zero_p ? "new" : "bugfix"
   opt_b = zero_p ? " -b" : ""
   comm  = zero_p ? "create a new" : "switch to existing"
   return <<"END"
-## How to release #{version}
+## Procedure for #{release_type} release (#{version})
 
 git diff                	# confirm that there is no changes
 rake test
