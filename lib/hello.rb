@@ -90,7 +90,13 @@ module Hello
     def new_option_parser(options, *args)
       parser = OptionParser.new(*args)
       OPTION_SCHEMA.each do |key, arr|
-        parser.on(*arr) {|v| options[key] = v }
+        #if arr.include?(:multiple)
+        #  arr = arr.dup
+        #  arr.delete(:multiple)
+        #  parser.on(*arr) {|v| (options[key] ||= []) << v }
+        #else
+          parser.on(*arr) {|v| options[key] = v }
+        #end
       end
       return parser
     end
