@@ -10,6 +10,13 @@ module Hello
   VERSION = '$Version: 0.1.0 $'.split()[1]
 
 
+  class BaseError < StandardError
+  end
+
+  class CommandError < BaseError
+  end
+
+
   class Model
 
     DEFAULT_NAME = "World"
@@ -49,7 +56,7 @@ module Hello
     def self.main(argv=ARGV, command: nil)
       self.new(command).run(*argv)
       return 0
-    rescue OptionParser::InvalidOption => ex
+    rescue OptionParser::InvalidOption, BaseError => ex
       $stderr.puts "[ERROR] #{ex.message}"
       return 1
     end
@@ -63,7 +70,11 @@ module Hello
       done = handle_options(options)
       return if done
       #
-      name = args.empty? ? nil : args[0]
+      case args.length
+      when 0 ; name = nil
+      when 1 ; name = args[0]
+      else   ; raise CommandError, "Too many arguments (max: 1)."
+      end
       model = Model.new(options[:lang])
       puts model.message(name)
     end
