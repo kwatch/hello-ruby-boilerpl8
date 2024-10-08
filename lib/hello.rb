@@ -82,22 +82,25 @@ module Hello
     protected
 
     OPTION_SCHEMA = {
-      :help    => ["-h", "--help", "print help message"],
-      :version => [      "--version", "print version"],
+      :help    => ["-h", "--help"       , "print help message"],
+      :version => [      "--version"    , "print version"],
       :lang    => ["-l", "--lang=<lang>", "language (en|fr|it)", ["en", "fr", "it"]],
     }
 
     def new_option_parser(options, *args)
       parser = OptionParser.new(*args)
       OPTION_SCHEMA.each do |key, arr|
+        parser.on(*arr) {|v| options[key] = v }
+        ### or if you need multiple option like '-I <path>' in 'ruby' command...
         #if arr.include?(:multiple)
         #  arr = arr.dup
         #  arr.delete(:multiple)
         #  parser.on(*arr) {|v| (options[key] ||= []) << v }
         #else
-          parser.on(*arr) {|v| options[key] = v }
+        #  parser.on(*arr) {|v| options[key] = v }
         #end
       end
+      #parser.require_exact = true    # stop guessing option names
       return parser
     end
 
