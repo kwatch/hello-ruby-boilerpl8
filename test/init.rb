@@ -5,6 +5,10 @@ require 'minitest/autorun'
 require 'minitest/ok'
 require 'stringio'
 
+testdir = File.dirname(__FILE__)
+libdir  = File.absolute_path(File.join(File.dirname(testdir), "lib"))
+$LOAD_PATH << libdir unless $LOAD_PATH.include?(libdir)
+
 require 'hello'
 
 

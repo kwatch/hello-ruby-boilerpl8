@@ -2,10 +2,9 @@
 # frozen_string_literal: true
 
 
-testdir = File.dirname(__FILE__)
-libdir  = File.absolute_path(File.join(File.dirname(testdir), "lib"))
-$LOAD_PATH << libdir unless $LOAD_PATH.include?(libdir)
+require_relative './init'
 
+testdir = File.dirname(__FILE__)
 Dir.glob(File.join(testdir, "**/*_test.rb")).sort.each do |fpath|
   #require File.absolute_path(fpath)
   require_relative fpath.sub(testdir, ".")
