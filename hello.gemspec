@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name            = '<%= @project %>'
-  spec.version         = '$Release: 0.0.0 $'.split()[1]
+  spec.version         = '$Version: 0.0.0 $'.split()[1]
   spec.author          = 'YOUR NAME'
   spec.email           = 'yourname(at)example.com'
   spec.platform        = Gem::Platform::RUBY

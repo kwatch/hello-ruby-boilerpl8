@@ -46,7 +46,7 @@ END
     context "when '-v' or '--version' specified" do
 
       it "prints version number to stdout." do
-        expected = "#{Hello::RELEASE}\n"
+        expected = "#{Hello::VERSION}\n"
         assert_output(expected) { Hello::Main.new.run("-v") }
         assert_output(expected) { Hello::Main.new.run("--version") }
       end

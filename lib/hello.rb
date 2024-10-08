@@ -7,7 +7,7 @@ require 'optparse'
 module Hello
 
 
-  RELEASE = '$Release: 0.1.0 $'.split()[1]
+  VERSION = '$Version: 0.1.0 $'.split()[1]
 
 
   class Model
@@ -46,7 +46,7 @@ module Hello
       end
       #
       if options[:version]
-        puts RELEASE
+        puts VERSION
         return 0
       end
       #
