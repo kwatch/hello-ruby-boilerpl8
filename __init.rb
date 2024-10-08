@@ -21,7 +21,7 @@ def run
   ## edit project name in Rakefile
   File.open('Rakefile', 'r+') do |f|
     s = f.read()
-    s = s.sub('PROJECT = "hello"', "PROJECT = '#{@project}'")
+    s = s.sub(/(PROJECT += +)\S+/, "\\1'#{@project}'")
     f.rewind()
     f.truncate(0)
     f.write(s)
