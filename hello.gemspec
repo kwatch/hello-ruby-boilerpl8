@@ -3,10 +3,10 @@
 Gem::Specification.new do |spec|
   spec.name            = '<%= @project %>'
   spec.version         = '$Version: 0.0.0 $'.split()[1]
-  spec.author          = 'YOUR NAME'
-  spec.email           = 'yourname(at)example.com'
+  spec.author          = '<%= @user %>'
+  spec.email           = '<%= @user %>@example.com'
   spec.platform        = Gem::Platform::RUBY
-  spec.homepage        = 'https://github.com/yourname/<%= @project %>'
+  spec.homepage        = 'https://github.com/<%= @user %>/<%= @project %>'
   spec.summary         = "example scirpt to print 'Hello'"
   spec.description     = <<-'END'
 This is an example project to create a script which just print 'Hello'.

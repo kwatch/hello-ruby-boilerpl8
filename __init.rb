@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 
 require 'erb'
+require 'etc'
 
 
 def run
 
-  ## project name
-  @project = File.basename(Dir.pwd)
+  ## context values
+  @project = File.basename(Dir.pwd)             # project name
+  @user    = ENV['USER'] || Etc.getlogin()      # user name
 
   ## render template
-  files = ['hello.gemspec']
+  files = ['hello.gemspec', 'MIT-LICENSE']
   files.each do |fname|
     s = File.read(fname)
     new_s = ERB.new(s).result(binding)
     if new_s != s
-      File.open(fname, 'w') {|f| f.write(new_s) }
+      File.write(fname, new_s)
     end
   end
 
