@@ -31,7 +31,7 @@ end
 
 desc "update release number"
 task :prepare do
-  release = release_number_required(:prepare)
+  version = version_number_required(:prepare)
   edit(spec.files) {|s|
     s.gsub(/\$Release\:.*?\$/,   "$Release\: #{release} $") \
      .gsub(/\$Release\$/,        release)
@@ -48,14 +48,14 @@ namespace :gem do
   desc "upload gem to rubygems.org"
   task :publish => :build do
     spec = load_gemspec_file("#{PROJECT}.gemspec")
-    release = spec.version
-    gemfile = "#{PROJECT}-#{release}.gem"
+    version = spec.version
+    gemfile = "#{PROJECT}-#{version}.gem"
     print "*** Are you sure to upload #{gemfile}? [y/N]: "
     answer = gets().strip()
     if answer =~ /\A[yY]/
       sh "gem push #{gemfile}"
-      #sh "git tag release-#{release}"
-      sh "git tag v#{release}"
+      #sh "git tag release-#{version}"
+      sh "git tag v#{version}"
     end
   end
 
@@ -82,18 +82,18 @@ def load_gemspec_file(gemspec_file)
   return Gem::Specification::load(gemspec_file)
 end
 
-def release_number_required(task_name)
-  release = ENV['release']
-  unless release
+def version_number_required(task_name)
+  version = ENV['version']
+  unless version
     $stderr.puts <<"END"
 ##
-## ERROR: rake #{task_name}: requires 'release=X.X.X' option.
+## ERROR: rake #{task_name}: requires 'version=X.X.X' option.
 ##        For example:
-##           $ rake #{task_name} release=1.0.0
+##           $ rake #{task_name} version=1.0.0
 ##
 END
-    errmsg = "rake #{task_name}: requires 'release=X.X.X' option."
+    errmsg = "rake #{task_name}: requires 'version=X.X.X' option."
     raise ArgumentError.new(errmsg)
   end
-  return release
+  return version
 end
