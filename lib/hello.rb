@@ -14,9 +14,26 @@ module Hello
 
     DEFAULT_NAME = "World"
 
+    def initialize(lang=nil)
+      lang ||= "en"
+      case lang
+      when "en", "fr", "it";   # ok
+      else
+        raise "#{lang}: Unknown language."
+      end
+      @lang = lang
+    end
+    attr_reader :lang
+
     def message(name=nil)
       name ||= DEFAULT_NAME
-      return "Hello, #{name}!"
+      case lang
+      when "en" ; return "Hello, #{name}!"
+      when "fr" ; return "Bonjour, #{name}!"
+      when "it" ; return "Chao, #{name}!"
+      else
+        raise "** internal error: lang=#{lang}"
+      end
     end
 
   end
@@ -24,48 +41,74 @@ module Hello
 
   class Main
 
-    def self.main(argv=ARGV)
-      begin
-        status = self.new.run(*argv)
-      rescue OptionParser::InvalidOption => ex
-        script = File.basename($0)
-        $stderr.puts "#{script}: #{ex.message}"
-        status = 1
-      end
-      exit(status)
+    def initialize(command=nil)
+      @command = command || File.basename($0)
+    end
+    attr_reader :command
+
+    def self.main(argv=ARGV, command: nil)
+      self.new(command).run(*argv)
+      return 0
+    rescue OptionParser::InvalidOption => ex
+      $stderr.puts "[ERROR] #{ex.message}"
+      return 1
     end
 
     def run(*args)
-      options = {}
-      parser = option_parser(options)
-      parser.parse!(args)
+      opts = {}
+      parser = new_option_parser(opts)
+      #parser.parse!(args)
+      parser.permute!(args)   # or .order!()
       #
-      if options[:help]
-        puts parser.help()
-        return 0
-      end
+      done = handle_options(opts)
+      return if done
       #
-      if options[:version]
-        puts VERSION
-        return 0
-      end
-      #
-      name = args[0] || options[:name]
-      msg = Model.new.message(name)
-      puts msg
-      return 0
+      lang = opts[:lang]
+      name = args[0]
+      model = Model.new(lang)
+      puts model.message(name)
+      return
     end
 
-    private
+    protected
 
-    def option_parser(options)
-      script = File.basename($0)
-      parser = OptionParser.new
-      parser.banner = "Usage: #{script} [OPTIONS] [NAME]"
-      parser.on("-h", "--help", "print help message") { options[:help] = true }
-      parser.on("-v", "--version", "print version") { options[:version] = true }
-      parser.on("-n", "--name=NAME", "user name") {|v| options[:name] = v }
+    OPTION_SCHEMA = {
+      :help    => ["-h", "--help", "print help message"],
+      :version => [      "--version", "print version"],
+      :lang    => ["-l", "--lang=<lang>", "language (en|fr|it)", ["en", "fr", "it"]],
+    }
+
+    def new_option_parser(options, *args)
+      parser = OptionParser.new(*args)
+      OPTION_SCHEMA.each do |key, arr|
+        parser.on(*arr) {|v| options[key] = v }
+      end
       return parser
+    end
+
+    def handle_options(opts)
+      if opts[:help]
+        print render_help_message()
+        return true
+      end
+      if opts[:version]
+        puts VERSION
+        return true
+      end
+      return false
+    end
+
+    def render_help_message(width: 25, indent: "  ")
+      parser = new_option_parser({}, nil, width, indent)
+      #parser.banner = "Usage: #{@command} [<options>] [<name>]"
+      #return parser.help()
+      ### or
+      buf = []
+      buf << "Usage: #{@command} [<options>] [<name>]\n"
+      buf << "\n"
+      buf << "Options:\n"
+      buf << parser.summarize()
+      return buf.join()
     end
 
   end
@@ -75,5 +118,6 @@ end
 
 
 if __FILE__ == $0
-  Hello::Main.main()
+  status = Hello::Main.main()
+  exit status    # 0 or 1
 end
