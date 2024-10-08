@@ -17,4 +17,18 @@ if defined?(Rake)
     end
   end
 
+  ## interoperability with Benry-MicroRake
+  Rake::DSL.module_eval do
+    alias __rake_desc desc
+    def desc(description, *args, **kwargs)
+      __rake_desc(description)  # ignore extra args and kwargs
+    end
+    def run_task(name)
+      Rake::Task[name].invoke()
+    end
+    def task_defined?(name)
+      Rake::Task.task_defined?(name)
+    end
+  end
+
 end
