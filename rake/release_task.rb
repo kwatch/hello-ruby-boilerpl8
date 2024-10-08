@@ -38,23 +38,27 @@ task :prepare do
   }
 end
 
-desc "create gem package"
-task :package do
-  sh "gem build #{PROJECT}.gemspec"
-end
+namespace :gem do
 
-desc "upload gem to rubygems.org"
-task :publish => :package do
-  spec = load_gemspec_file("#{PROJECT}.gemspec")
-  release = spec.version
-  gemfile = "#{PROJECT}-#{release}.gem"
-  print "*** Are you sure to upload #{gemfile}? [y/N]: "
-  answer = gets().strip()
-  if answer =~ /\A[yY]/
-    sh "gem push #{gemfile}"
-    #sh "git tag release-#{release}"
-    sh "git tag v#{release}"
+  desc "create gem package"
+  task :build do
+    sh "gem build #{PROJECT}.gemspec"
   end
+
+  desc "upload gem to rubygems.org"
+  task :publish => :build do
+    spec = load_gemspec_file("#{PROJECT}.gemspec")
+    release = spec.version
+    gemfile = "#{PROJECT}-#{release}.gem"
+    print "*** Are you sure to upload #{gemfile}? [y/N]: "
+    answer = gets().strip()
+    if answer =~ /\A[yY]/
+      sh "gem push #{gemfile}"
+      #sh "git tag release-#{release}"
+      sh "git tag v#{release}"
+    end
+  end
+
 end
 
 def edit(*filepaths)
