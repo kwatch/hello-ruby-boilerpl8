@@ -1,6 +1,5 @@
-# coding: utf-8
+# encoding: utf-8
 # frozen_string_literal: true
-
 
 PROJECT       = "hello"
 COPYRIGHT     = "copyright(c) 2024 YOUR_NAME"
