@@ -1,9 +1,14 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
+# frozen_string_literal: true
 
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'minitest/ok'
 require 'stringio'
+
+testdir = File.dirname(__FILE__)
+libdir  = File.absolute_path(File.dirname(testdir) + "/lib")
+$LOAD_PATH << libdir unless $LOAD_PATH.include?(libdir)
 
 require 'hello'
 

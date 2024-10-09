@@ -5,20 +5,24 @@ require_relative '../init'
 
 describe Hello::Main do
 
+  before do
+    @main = Hello::Main.new
+  end
+
 
   describe '#run()' do
 
     it "prints hello message to stdout." do
       expected = "Hello, World!\n"
-      assert_output(expected) { Hello::Main.new.run() }
+      assert_output(expected) { @main.run() }
     end
 
     it "takes user name." do
       expected = "Hello, Taki!\n"
-      assert_output(expected) { Hello::Main.new.run("Taki") }
+      assert_output(expected) { @main.run("Taki") }
     end
 
-    context "when '-h' or '--help' specified" do
+    context "when '-h' or '--help' specified..." do
 
       it "prints help message to stdout." do
         expected = <<"END"
@@ -29,27 +33,27 @@ Options:
       --version             print version
   -l, --lang=<lang>         language (en|fr|it)
 END
-        assert_output(expected) { Hello::Main.new.run("-hv") }
-        assert_output(expected) { Hello::Main.new.run("--help") }
+        assert_output(expected) { @main.run("-hv") }
+        assert_output(expected) { @main.run("--help") }
       end
 
     end
 
-    context "when '-v' or '--version' specified" do
+    context "when '-v' or '--version' specified..." do
 
       it "prints version number to stdout." do
         expected = "#{Hello::VERSION}\n"
-        assert_output(expected) { Hello::Main.new.run("-v") }
-        assert_output(expected) { Hello::Main.new.run("--version") }
+        assert_output(expected) { @main.run("-v") }
+        assert_output(expected) { @main.run("--version") }
       end
 
     end
 
-    context "when '-l <lang>' or '--lang=<lang>' specified" do
+    context "when '-l <lang>' or '--lang=<lang>' specified..." do
 
       it "prints a message according to language." do
-        assert_output("Bonjour, World!\n") { Hello::Main.new.run("-l", "fr") }
-        assert_output("Chao, World!\n")    { Hello::Main.new.run("--lang=it") }
+        assert_output("Bonjour, World!\n") { @main.run("-l", "fr") }
+        assert_output("Chao, World!\n")    { @main.run("--lang=it") }
       end
 
     end
