@@ -13,8 +13,13 @@ describe Hello::Model do
     end
 
     it "raises error if unknown language specified." do
-      pr = proc { Hello::Model.new("ja") }
-      ok {pr}.raise?(RuntimeError, "ja: Unknown language.")
+      exc = assert_raises(RuntimeError) do
+        Hello::Model.new("ja")
+      end
+      ok {exc.message} == "ja: Unknown language."
+      ### or:
+      #pr = proc { Hello::Model.new("ja") }
+      #ok {pr}.raise?(RuntimeError, "ja: Unknown language.")
     end
 
   end
