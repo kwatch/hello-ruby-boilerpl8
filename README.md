@@ -36,6 +36,11 @@ $ rake test:all
 Changes
 -------
 
+### Release 0.3.1
+
+* Add `Gemfile`.
+
+
 ### Release 0.3.0
 
 * Rewrite `lib/hello.rb`.
