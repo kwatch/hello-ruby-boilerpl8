@@ -1,7 +1,7 @@
 Hello-Ruby
 ==========
 
-($Release: 0.2.0 $)
+($Release: 0.3.0 $)
 
 
 About
@@ -26,7 +26,7 @@ Hello, World!
 Changes
 -------
 
-### Release 0.2.0
+### Release 0.3.0
 
 * Rewrite `lib/hello.rb`.
 * Add `rake/*_task.rb` files.
@@ -40,7 +40,12 @@ Changes
 * Include user account name into gemspec file.
 
 
-### Release 0.1.0
+### Release 0.2.1
+
+* Add new task 'howto' which prints procedure of release operation.
+
+
+### Release 0.2.0
 
 * First public release.
 
