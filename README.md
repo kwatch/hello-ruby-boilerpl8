@@ -1,7 +1,7 @@
 Hello-Ruby
 ==========
 
-($Release: 0.3.2 $)
+($Release: 0.3.4 $)
 
 
 About
@@ -35,6 +35,12 @@ $ rake test:all
 
 Changes
 -------
+
+
+### Release 0.3.4
+
+* Change `Hello::Model` to raise `ArgumentError` instead of `RuntimeError`.
+* Fix wrong test data.
 
 
 ### Release 0.3.3
