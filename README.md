@@ -1,15 +1,14 @@
-==========
 Hello-Ruby
 ==========
 
-($Release: 0.1.0 $)
+($Release: 0.2.0 $)
 
 
 About
 -----
 
-This is an example Ruby project to create a script which prints just "Hello, World!".
-You can use this repository as boilerplate of Ruby project.
+This is a sample Ruby project to create a script which prints just "Hello, World!".
+This repository can be used as a boilerplate for Ruby projects.
 
 
 How To
