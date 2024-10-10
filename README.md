@@ -37,6 +37,11 @@ Changes
 -------
 
 
+### Release 0.3.3
+
+* Add `_setenv.sh`.
+
+
 ### Release 0.3.2
 
 * Fix 'release:wizard' task.
