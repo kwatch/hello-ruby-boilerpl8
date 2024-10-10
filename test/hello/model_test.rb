@@ -35,8 +35,8 @@ describe Hello::Model do
     end
 
     it "takes user name." do
-      ok {Hello::Model.new.message("Mitsuba")} == "Hello, Mitsuba!"
-      ok {Hello::Model.new("fr").message("Mitsuba")} == "Bonjour, Mitsuba!"
+      ok {Hello::Model.new.message("Mitsuha")} == "Hello, Mitsuha!"
+      ok {Hello::Model.new("fr").message("Mitsuha")} == "Bonjour, Mitsuha!"
     end
 
   end
