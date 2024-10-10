@@ -23,6 +23,28 @@ Hello, World!
 ```
 
 
+Changes
+-------
+
+### Release 0.2.0
+
+* Rewrite `lib/hello.rb`.
+* Add `rake/*_task.rb` files.
+* Define new `help` task which is a default task.
+* Define new `task:all` task which runs tests on multiple Ruby versions.
+* Define new `clean` task instead of using `rake/clean`.
+* Define new `release:wizard` task.
+* Rename `howto` task to `release:howto`.
+* Rename `package` task to `gem:build`.
+* Rename `release` task to `gem:publish`.
+* Include user account name into gemspec file.
+
+
+### Release 0.1.0
+
+* First public release.
+
+
 License
 -------
 
