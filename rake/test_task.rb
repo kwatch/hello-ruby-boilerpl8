@@ -33,14 +33,20 @@ end
 
 def ruby_root_dir()
   rbenv_root = ENV['RBENV_ROOT'] || (defined?(RBENV_ROOT) && RBENV_ROOT) || nil
+  asdf_root  = ENV['ASDF_DATA_DIR'] || (defined?(ASDF_DATA_DIR) && ASDF_DATA_DIR) || nil
   vs_home    = ENV['VS_HOME'] || (defined?(VS_HOME) && VS_HOME) || nil
   rbenv_dir  = File.expand_path("~/.rbenv")
-  if rbenv_root && ! rb_env_root.empty?
+  asdf_dir   = File.expand_path("~/.asdf")
+  if rbenv_root && ! rbenv_root.empty?
     return "#{rbenv_root}/versions"
+  elsif asdf_root && ! asdf_root.empty?
+    return "#{asdf_root}/installs/ruby"
   elsif vs_home && ! vs_home.empty?
     return "#{vs_home}/ruby"
   elsif File.directory?(rbenv_dir)
     return "#{rbenv_dir}/versions"
+  elsif File.directory?(asdf_dir)
+    return "#{asdf_dir}/installs/ruby"
   else
     fail "$RBENV_ROOT or $VS_HOME should be set for 'test:all' task."
   end
