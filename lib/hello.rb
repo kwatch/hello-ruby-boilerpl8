@@ -7,7 +7,7 @@ require 'optparse'
 module Hello
 
 
-  VERSION = '$Version: 0.1.0 $'.split()[1]
+  VERSION = '$Version: 0.0.0 $'.split()[1]
 
 
   class BaseError < StandardError
