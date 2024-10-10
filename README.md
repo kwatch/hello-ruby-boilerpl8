@@ -1,7 +1,7 @@
 Hello-Ruby
 ==========
 
-($Release: 0.3.1 $)
+($Release: 0.3.2 $)
 
 
 About
@@ -35,6 +35,12 @@ $ rake test:all
 
 Changes
 -------
+
+
+### Release 0.3.2
+
+* Fix 'release:wizard' task.
+
 
 ### Release 0.3.1
 
