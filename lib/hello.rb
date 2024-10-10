@@ -34,12 +34,12 @@ module Hello
 
     def message(name=nil)
       name ||= DEFAULT_NAME
-      case lang
+      case @lang
       when "en" ; return "Hello, #{name}!"
       when "fr" ; return "Bonjour, #{name}!"
       when "it" ; return "Chao, #{name}!"
       else
-        raise "** internal error: lang=#{lang}"
+        raise "** internal error: @lang=#{@lang}"
       end
     end
 
