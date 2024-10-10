@@ -21,10 +21,10 @@ task :clean do
   rm_f Dir.glob(GARBAGE_FILES)
 end
 
-desc "delete product files as well as garbage files"
+desc "delete garbage and product files"
 task "clean:all" => :clean do
   rm_f Dir.glob(PRODUCT_FILES)
 end
 
-GARBAGE_FILES = ["**/*~", "#{PROJECT}-*.*.*/"]
+GARBAGE_FILES = ["**/*~", "**/*.bak", "**/core", "#{PROJECT}-*.*.*/"]
 PRODUCT_FILES = ["#{PROJECT}-*.gem"]
