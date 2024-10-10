@@ -28,6 +28,6 @@ END
   spec.test_files      = ['test/all.rb']   # or: Dir['test/**/*_test.rb']
   #spec.extra_rdoc_files = ['README.rdoc', 'CHANGES.md']
 
-  spec.add_development_dependency 'minitest'         , '~> 5.8'
+  spec.add_development_dependency 'minitest'         , '~> 5.25'
   spec.add_development_dependency 'minitest-ok'      , '~> 0.4'
 end
