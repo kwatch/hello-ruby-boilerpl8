@@ -14,7 +14,7 @@ describe Hello::Model do
     end
 
     it "raises error if unknown language specified." do
-      exc = assert_raises(RuntimeError) do
+      exc = assert_raises(ArgumentError) do
         Hello::Model.new("ja")
       end
       ok {exc.message} == "ja: Unknown language."

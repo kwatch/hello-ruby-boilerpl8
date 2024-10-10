@@ -26,7 +26,7 @@ module Hello
       case lang
       when "en", "fr", "it";   # ok
       else
-        raise "#{lang}: Unknown language."
+        raise ArgumentError, "#{lang}: Unknown language."
       end
       @lang = lang
     end
