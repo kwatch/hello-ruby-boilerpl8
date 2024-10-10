@@ -18,8 +18,18 @@ How To
 $ gem install boilerpl8
 $ boilerpl8 github:kwatch/hello-ruby myproject
 $ cd myproject
-$ RUBYLIB=$PWD/lib bin/hello
+$ export RUBYLIB=$PWD/lib
+$ bin/hello
 Hello, World!
+```
+
+Run tests:
+
+```console
+$ gem install -N -g
+$ rake test
+$ vi Rakefile    # edit 'RUBY_VERSIONS'
+$ rake test:all
 ```
 
 
