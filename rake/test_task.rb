@@ -22,34 +22,23 @@ task "test:all" do
 end
 
 def ruby_versions()
-  if ENV['RUBY_VERSIONS']
-    return ENV['RUBY_VERSIONS'].split(",")
-  elsif defined?(RUBY_VERSIONS)
-    return RUBY_VERSIONS
-  else
-    fail "RUBY_VERSIONS should be set for 'test:all' task."
-  end
+  return ENV['RUBY_VERSIONS'].split(",") if ENV['RUBY_VERSIONS']
+  return RUBY_VERSIONS                   if defined?(RUBY_VERSIONS)
+  fail "RUBY_VERSIONS should be set for 'test:all' task."
 end
 
 def ruby_root_dir()
-  rbenv_root = ENV['RBENV_ROOT'] || (defined?(RBENV_ROOT) && RBENV_ROOT) || nil
+  rbenv_root = ENV['RBENV_ROOT']    || (defined?(RBENV_ROOT) && RBENV_ROOT) || nil
   asdf_root  = ENV['ASDF_DATA_DIR'] || (defined?(ASDF_DATA_DIR) && ASDF_DATA_DIR) || nil
-  vs_home    = ENV['VS_HOME'] || (defined?(VS_HOME) && VS_HOME) || nil
+  vs_home    = ENV['VS_HOME']       || (defined?(VS_HOME) && VS_HOME) || nil
   rbenv_dir  = File.expand_path("~/.rbenv")
   asdf_dir   = File.expand_path("~/.asdf")
-  if rbenv_root && ! rbenv_root.empty?
-    return "#{rbenv_root}/versions"
-  elsif asdf_root && ! asdf_root.empty?
-    return "#{asdf_root}/installs/ruby"
-  elsif vs_home && ! vs_home.empty?
-    return "#{vs_home}/ruby"
-  elsif File.directory?(rbenv_dir)
-    return "#{rbenv_dir}/versions"
-  elsif File.directory?(asdf_dir)
-    return "#{asdf_dir}/installs/ruby"
-  else
-    fail "$RBENV_ROOT or $VS_HOME should be set for 'test:all' task."
-  end
+  return "#{rbenv_root}/versions"     if rbenv_root && ! rbenv_root.empty?
+  return "#{asdf_root}/installs/ruby" if asdf_root  && ! asdf_root.empty?
+  return "#{vs_home}/ruby"            if vs_home    && ! vs_home.empty?
+  return "#{rbenv_dir}/versions"      if File.directory?(rbenv_dir)
+  return "#{asdf_dir}/installs/ruby"  if File.directory?(asdf_dir)
+  fail "$RBENV_ROOT or $VS_HOME should be set for 'test:all' task."
 end
 
 def each_ruby_path(ruby_root_dir, ruby_versions, header, &block)
